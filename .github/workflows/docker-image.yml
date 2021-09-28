@@ -4,6 +4,7 @@ on:
     branches: [ master ]
 jobs:
   build_server:
+    environment: docker
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -26,6 +27,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   build_client:
+    environment: docker
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
