@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-kubectl apply --prune -f pods burster
+kubectl delete pods grpcserver && kubectl apply -f grpc_server.yaml

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: burster
+spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+  - name: burster
+    image: darktrop/dghz:master
+    args: ["--connections 4 --cpus 4 --concurrency ${CONCURRENCY} --rps ${QPS}", "${SERVER_IP}:8080"]
+    resources:
+      limits:
+        cpu: "4"
+        memory: 4Gi
+      requests:
+        cpu: "3"
+        memory: 4Gi
+    tty: true
+
+  restartPolicy: Never
+  hostNetwork: true
+  dnsPolicy: Default
