@@ -13,6 +13,6 @@ WORKDIR /grpc/ghz
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-COPY ../proto /grpc/proto
+COPY proto /grpc/proto
 
 ENTRYPOINT ["./entrypoint.sh"]
