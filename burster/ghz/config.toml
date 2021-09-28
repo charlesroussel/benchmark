@@ -1,0 +1,8 @@
+"max-duration" = "60s"
+concurrency = 32
+cpus = 4
+rps = 70000
+insecure = true
+data-file = "./request.json"
+proto = "../proto/inference.proto"
+call = "inference.AdServer.Score"

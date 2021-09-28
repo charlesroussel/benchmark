@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: grpcserver
+spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+  - name: grpcserver
+    image: darktrop/benchmark-grpc:latest
+    resources:
+      limits:
+        cpu: "4"
+        memory: 4Gi
+      requests:
+        cpu: "3"
+        memory: 4Gi
+    ports:
+      - name: grpc
+        containerPort: 8080
+        protocol: TCP
+
+  restartPolicy: Never
+  hostNetwork: true
+  dnsPolicy: Default
