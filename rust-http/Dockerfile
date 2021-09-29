@@ -1,4 +1,4 @@
-FROM rust:latest
+FROM ghcr.io/rust-lang/rust:nightly-alpine
 COPY . /rust-http
 WORKDIR /rust-http
 RUN cargo build --release
