@@ -31,6 +31,7 @@ func AdRouter(app fiber.Router, service AdService) {
 func handle_ad(service AdService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		request := BidRequestPool.Get().(*models.BidBodyRequest)
+		defer BidRequestPool.Put(request)
 		if err := c.BodyParser(request); err != nil {
 			_ = c.JSON(&fiber.Map{
 				"success": false,
@@ -50,5 +51,6 @@ func handle_ad(service AdService) fiber.Handler {
 			"success": true,
 			"result":  result,
 		})
+
 	}
 }
