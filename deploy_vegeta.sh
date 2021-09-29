@@ -12,6 +12,6 @@ EndOfMessage
 
 kubectl delete pods vegeta
 # | "
-kubectl run vegeta --image="peterevans/vegeta:latest" --restart=Never -- sh -c "echo '$DATA' > body.json && echo '$QUERY' | vegeta attack -body body.json -rate=$QPS -duration=600s | tee results.bin | vegeta report"
+kubectl run vegeta --image="peterevans/vegeta:latest" --restart=Never -- sh -c "echo '$DATA' > body.json && echo '$QUERY' | vegeta attack -body body.json -rate=$QPS -duration=300s | tee results.bin | vegeta report"
 kubectl wait --for=condition=Ready --timeout=600s pod/vegeta
 kubectl logs -f vegeta

@@ -1,9 +1,17 @@
 package routes
 
 import (
+	"sync"
+
 	"github.com/Ogury/profiling/models"
 	"github.com/gofiber/fiber/v2"
 )
+
+var BidRequestPool = sync.Pool{
+	New: func() interface{} {
+		return new(models.BidBodyRequest)
+	},
+}
 
 type AdService interface {
 	HandleBidRequest(request *models.BidBodyRequest) (*models.BidResponse, error)
@@ -22,15 +30,15 @@ func AdRouter(app fiber.Router, service AdService) {
 
 func handle_ad(service AdService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		var adr models.BidBodyRequest
-		if err := c.BodyParser(&adr); err != nil {
+		request := BidRequestPool.Get().(*models.BidBodyRequest)
+		if err := c.BodyParser(request); err != nil {
 			_ = c.JSON(&fiber.Map{
 				"success": false,
 				"error":   err,
 			})
 		}
 
-		result, err := service.HandleBidRequest(&adr)
+		result, err := service.HandleBidRequest(request)
 
 		if err != nil {
 			return c.JSON(&fiber.Map{

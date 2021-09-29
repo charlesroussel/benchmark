@@ -30,7 +30,6 @@ func main() {
 
 	service := &routes.MockService{}
 	routes.AdRouter(app, service)
-
 	app.Post("/bypass", func(c *fiber.Ctx) error {
 		var adr models.BidBodyRequest
 		if err := c.BodyParser(&adr); err != nil {

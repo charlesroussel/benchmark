@@ -9,7 +9,10 @@ spec:
   containers:
   - name: httpserver
     image: darktrop/benchmark-http:master
-    args: ["${CORE_COUNT}"]
+    imagePullPolicy: "Always"
+    env:
+      - name: CORE_COUNT
+        value: "${THREAD_COUNT}"
     resources:
       limits:
         cpu: "${CORE_COUNT}"
