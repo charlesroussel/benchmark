@@ -28,11 +28,13 @@ async fn echo(mut payload: web::Payload) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let workers: usize = std::env::var("WORKERS").unwrap_or("1".to_owned()).parse().unwrap();
     HttpServer::new(|| {
         App::new()
             .service(echo)
     })
     .bind(("0.0.0.0", 8080))?
+    .workers(workers)
     .run()
     .await
 }

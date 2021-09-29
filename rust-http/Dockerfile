@@ -3,5 +3,5 @@ COPY . /rust-http
 WORKDIR /rust-http
 RUN cargo build --release
 EXPOSE 8080:8080
-ENV CORE_COUNT 0
+ENV WORKERS 1
 CMD [ "./target/release/rust-http" ]
