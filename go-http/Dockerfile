@@ -5,4 +5,5 @@ WORKDIR /go-http
 RUN go get -d -v
 RUN CGO_ENABLED=1 go build -o /go/bin/fiber_http
 EXPOSE 8080:8080
+ENV CORE_COUNT -1
 CMD [ "/go/bin/fiber_http" ]

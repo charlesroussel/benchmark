@@ -14,13 +14,14 @@ import (
 
 func main() {
 	fmt.Printf("Found number of cpus: %d\n", runtime.NumCPU())
-	if len(os.Args) > 1 {
-		core_uses, err := strconv.Atoi(os.Args[1])
-		if err == nil {
+	env_core_count, ok := os.LookupEnv("CORE_COUNT")
+	if ok {
+		core_uses, err := strconv.Atoi(env_core_count)
+		if err == nil && core_uses > 0 {
 			fmt.Printf("Using cores: %d\n", core_uses)
 			runtime.GOMAXPROCS(core_uses)
 		} else {
-			fmt.Printf("Unable to parse: %s to a number\n", os.Args[1])
+			fmt.Printf("Unable to parse: %s to a number\n", env_core_count)
 		}
 	}
 
