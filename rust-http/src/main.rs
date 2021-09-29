@@ -32,7 +32,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .service(echo)
     })
-    .bind(("0.0.0.0", 1234))?
+    .bind(("0.0.0.0", 8080))?
     .run()
     .await
 }
