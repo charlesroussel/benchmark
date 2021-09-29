@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpserver
+spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+  - name: httpserver
+    image: darktrop/benchmark-http:master
+    resources:
+      limits:
+        cpu: "${CORE_COUNT}"
+        memory: 4Gi
+      requests:
+        cpu: "${CORE_COUNT}"
+        memory: 4Gi
+    ports:
+      - name: http
+        containerPort: 8080
+        protocol: TCP
+
+  restartPolicy: Never
+  hostNetwork: true
+  dnsPolicy: Default

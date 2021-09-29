@@ -1,0 +1,132 @@
+{
+    "app": {
+      "bundle": "mwtt.ogury.tech",
+      "cat": [
+        "IAB1",
+        "IAB1-1",
+        "IAB3",
+        "books",
+        "business"
+      ],
+      "id": "OGY-0001",
+      "name": "App_Name",
+      "publisher": {
+        "id": "04241e0b1cc98976858ce16377c7eef4",
+        "name": "Publisher_Name"
+      },
+      "storeurl": "https://itunes.apple.com/us/app/candy-crush-saga/id553834731?mt=8",
+      "ver": "1.0"
+    },
+    "at": 1,
+    "badv": [
+      "competitor.com",
+      "advertiser.com",
+      "test.com"
+    ],
+    "bapp": [
+      "com.foo.mygame",
+      "123456789",
+      "987654321"
+    ],
+    "bcat": [
+      "IAB25",
+      "IAB26",
+      "IAB9-9",
+      "IAB3-7"
+    ],
+    "device": {
+      "carrier": "311-480",
+      "connectiontype": 2,
+      "dnt": 0,
+      "geo": {
+        "city": "New York",
+        "country": "USA",
+        "lat": 40.740987,
+        "lon": -73.999408,
+        "metro": "501",
+        "region": "NY",
+        "zip": "10011"
+      },
+      "h": 1334,
+      "ifa": "7RA77E86-4C7D-4BEB-AA39-BD4B87C7140F",
+      "ip": "8.25.196.26",
+      "js": 1,
+      "language": "en",
+      "make": "Apple",
+      "model": "iPhone10,1",
+      "os": "iOS",
+      "osv": "11.4.1",
+      "pxratio": 2.0,
+      "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77",
+      "w": 750
+    },
+    "id": "529c9930-3f78-42a0-9bc8-f6befe6233ff",
+    "imp": [
+      {
+        "banner": {
+          "api": [
+            3,
+            5
+          ],
+          "battr": [
+            3,
+            8,
+            9,
+            10,
+            14,
+            17,
+            6,
+            7
+          ],
+          "btype": [
+            4
+          ],
+          "format": [
+            {
+              "h": 240,
+              "w": 320
+            },
+            {
+              "h": 50,
+              "w": 300
+            },
+            {
+              "h": 60,
+              "w": 468
+            }
+          ],
+          "h": 50,
+          "pos": 1,
+          "w": 320
+        },
+        "bidfloor": 1.12,
+        "displaymanager": "mopub",
+        "displaymanagerver": "5.3.0",
+        "exp": 14400,
+        "ext": {
+          "networkids": {
+            "appid": "network_app_id",
+            "placementid": "network_placement_id"
+          },
+          "reward": 0
+        },
+        "id": "1",
+        "instl": 0,
+        "secure": 1,
+        "tagid": "b12ae796186931bfe7aa39471487b980"
+      }
+    ],
+    "regs": {
+      "ext": {
+        "gdpr": 0
+      }
+    },
+    "source": {
+      "pchain": "74b46c0ea83967ca:fa167489379c4e78b9e164b22e51965a"
+    },
+    "tmax": 550,
+    "user": {
+      "buyeruid": "network_bid_token",
+      "id": "0001"
+    }
+  }
