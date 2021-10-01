@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ginserver
+spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+  - name: ginserver
+    image: darktrop/gin-http:master
+    imagePullPolicy: "Always"
+    env:
+      - name: CORE_COUNT
+        value: "${THREAD_COUNT}"
+    resources:
+      limits:
+        cpu: "${CORE_COUNT}"
+        memory: 4Gi
+      requests:
+        cpu: "${CORE_COUNT}"
+        memory: 4Gi
+    ports:
+      - name: http
+        containerPort: 8080
+        protocol: TCP
+
+  restartPolicy: Never
+  hostNetwork: true
+  dnsPolicy: Default

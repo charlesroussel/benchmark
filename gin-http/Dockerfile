@@ -10,5 +10,5 @@ ENV CORE_COUNT 0
 
 
 FROM golang:alpine
-COPY --from=builder /go/bin/fiber_http /go/bin/gin_http
+COPY --from=builder /go/bin/gin_http /go/bin/gin_http
 CMD [ "/go/bin/gin_http" ]
