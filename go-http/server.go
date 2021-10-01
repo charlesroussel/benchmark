@@ -52,5 +52,8 @@ func main() {
 			"result":  result,
 		})
 	})
-	app.Listen(":8080")
+	err := app.Listen(":8080")
+	if err != nil {
+		panic(err)
+	}
 }

@@ -10,8 +10,12 @@ POST http://${SERVER_IP}:8080/echo
 Content-Type: application/json
 EndOfMessage
 
-kubectl delete pods vegeta
+kubectl delete pods vegeta vegeta1 vegeta2 vegeta3 vegeta4
 # | "
-kubectl run vegeta --image="peterevans/vegeta:latest" --restart=Never -- sh -c "echo '$DATA' > body.json && echo '$QUERY' | vegeta attack -body body.json -rate=$QPS -duration=60s -max-workers=256 | tee results.bin | vegeta report"
+kubectl run vegeta1 --image="peterevans/vegeta:latest" --restart=Never -- sh -c "echo '$DATA' > body.json && echo '$QUERY' | vegeta attack -body body.json -rate=$QPS -duration=60s -max-workers=32 | tee results.bin | vegeta report"
+kubectl run vegeta2 --image="peterevans/vegeta:latest" --restart=Never -- sh -c "echo '$DATA' > body.json && echo '$QUERY' | vegeta attack -body body.json -rate=$QPS -duration=60s -max-workers=32 | tee results.bin | vegeta report"
+kubectl run vegeta3 --image="peterevans/vegeta:latest" --restart=Never -- sh -c "echo '$DATA' > body.json && echo '$QUERY' | vegeta attack -body body.json -rate=$QPS -duration=60s -max-workers=32 | tee results.bin | vegeta report"
+kubectl run vegeta4 --image="peterevans/vegeta:latest" --restart=Never -- sh -c "echo '$DATA' > body.json && echo '$QUERY' | vegeta attack -body body.json -rate=$QPS -duration=60s -max-workers=32 | tee results.bin | vegeta report"
+
 kubectl wait --for=condition=Ready --timeout=600s pod/vegeta
 kubectl logs -f vegeta

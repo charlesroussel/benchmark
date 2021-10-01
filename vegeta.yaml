@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vegeta
+  labels:
+    name: vegeta
+spec:
+  parallelism: 4
+  template:
+    spec:
+      volumes:
+      - name: shared-data
+        emptyDir: {}
+      containers:
+      - name: vegeta
+        image: peterevans/vegeta:latest
+        command: ["/bin/sh"]
+        args: ["-c","echo '{\"name\":\"toto\"}' > body.json && echo \"POST http://${SERVER_IP}:8080/echo\" | vegeta attack -header 'Content-Type: application/json' -body body.json -rate=$QPS -duration=$DURATION -max-workers=$WORKERS | tee results.bin | vegeta report"]
+        imagePullPolicy: "Always"
+        resources:
+          limits:
+            cpu: "3"
+            memory: 4Gi
+          requests:
+            cpu: "3"
+            memory: 4Gi
+      hostNetwork: true
+      restartPolicy: Never

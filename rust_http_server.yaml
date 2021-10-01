@@ -11,14 +11,11 @@ spec:
     image: darktrop/rust-http:master
     imagePullPolicy: "Always"
     env:
-      - name: CORE_COUNT
-        value: "${THREAD_COUNT}"
+      - name: WORKERS
+        value: "${CORE_COUNT}"
     resources:
       limits:
-        cpu: "${CORE_COUNT}"
-        memory: 4Gi
-      requests:
-        cpu: "${CORE_COUNT}"
+        cpu: "3"
         memory: 4Gi
     ports:
       - name: http
