@@ -28,7 +28,7 @@ func (s *MockService) HandleBidRequest(request *models.BidBodyRequest) (*models.
 }
 
 func (s *MockService) CallDynamoDB(request *models.BidBodyRequest) (*models.BidResponse, error) {
-	id, err := connectors.DynamoClient.Get("table_name", "id", false)
+	id, err := connectors.DynamoClient.Get("benchmark_table", "toto", false)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func (s *MockService) CallDynamoDB(request *models.BidBodyRequest) (*models.BidR
 }
 
 func (s *MockService) CallDax(request *models.BidBodyRequest) (*models.BidResponse, error) {
-	id, err := connectors.DynamoClient.Get("table_name", "id", true)
+	id, err := connectors.DynamoClient.Get("benchmark_table", "toto", true)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func handle_result(c *fiber.Ctx) ResultHandler {
 		if err != nil {
 			return c.JSON(&fiber.Map{
 				"success": false,
-				"error":   err,
+				"error":   err.Error(),
 			})
 		}
 		return c.JSON(&fiber.Map{

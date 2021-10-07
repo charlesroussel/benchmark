@@ -2,6 +2,7 @@ package connectors
 
 import (
 	"context"
+	"errors"
 	"os"
 
 	"github.com/aws/aws-dax-go/dax"
@@ -9,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
 var DynamoClient DynamoService
@@ -25,7 +27,7 @@ func init() {
 
 	dax_cfg := dax.DefaultConfig()
 	dax_cfg.HostPorts = []string{daxEndpoint}
-	dax_cfg.Region = "us-west-2"
+	dax_cfg.Region = awsRegion
 	dax_client, err := dax.New(dax_cfg)
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(), func(lo *config.LoadOptions) error {
@@ -45,33 +47,42 @@ func init() {
 }
 
 type ExampleKey struct {
-	key string `dynamodbav:"key" json:"key"`
+	_id string `dynamodbav:_id`
 }
 
 type ExampleValue struct {
-	value string
+	value  string `dynamodbav:"value"`
+	value2 int    `dynamodbav:"value2"`
 }
 
 func (c *DynamoService) Get(tableName string, id string, isDax bool) (string, error) {
-	key := ExampleKey{key: id}
+	var itemInput = &dynamodb.GetItemInput{
+		TableName: aws.String(tableName),
+		Key: map[string]types.AttributeValue{
+			"_id": &types.AttributeValueMemberS{Value: id},
+		},
+	}
+	var out *dynamodb.GetItemOutput
+	var err error
+	if isDax {
+		out, err = c.dax_client.GetItem(context.TODO(), itemInput)
+	} else {
+		out, err = c.client.GetItem(context.TODO(), itemInput)
+	}
 
-	avs, err := attributevalue.MarshalMap(key)
 	if err != nil {
 		return "", err
 	}
 
-	var itemInput = &dynamodb.GetItemInput{
-		TableName: aws.String(tableName),
-		Key:       avs,
-	}
-	var out *dynamodb.GetItemOutput
-	if isDax {
-		out, err = c.client.GetItem(context.TODO(), itemInput)
-	} else {
-		out, err = c.dax_client.GetItem(context.TODO(), itemInput)
+	if out.Item == nil {
+		return "", errors.New("not found")
 	}
 
-	value := ExampleValue{}
-	err = attributevalue.UnmarshalMap(out.Item, &value)
-	return value.value, err
+	v := ExampleValue{}
+	attributevalue.Unmarshal(out.Item["value"], &v.value)
+	attributevalue.Unmarshal(out.Item["value2"], &v.value2)
+	if err != nil {
+		return "", err
+	}
+	return v.value, err
 }
